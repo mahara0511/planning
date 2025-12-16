@@ -67,7 +67,7 @@ Advanced concepts such as playlists, scheduling, advanced real-time sync, native
 - Web player accessible at `/player`
 - Player self-registers with the backend and receives a unique **playerId**
 - Player displays its playerId for the user to use when creating a Screen
-- Each user has one player for testing
+- Each user has only one player for testing
 
 ### Screen Management (Core Feature)
 
