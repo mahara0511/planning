@@ -1,6 +1,7 @@
 # SCIO (OptiSigns Clone) - Enterprise Digital Signage Platform
 
 A project to build a comprehensive Digital Signage management platform, comprising a Cloud-based administration system (CMS) and a content playback application for devices (Player App).
+The detailed plan of this project can be seen here: https://docs.google.com/spreadsheets/d/1tye-7tq9IO2VjYyD5eorjX9VhyEq_bGWEwC346MRGFc/edit?gid=0#gid=0
 
 ## Tech Stack
 
