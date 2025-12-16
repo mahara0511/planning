@@ -1,127 +1,198 @@
-# OptiSigns – SCIO Clone MVP Plan
+# SCIO (OptiSigns Clone) - Enterprise Digital Signage Platform
 
-## 1. MVP Overview
+A project to build a comprehensive Digital Signage management platform, comprising a Cloud-based administration system (CMS) and a content playback application for devices (Player App).
 
-The MVP is a **screen-first digital signage web application**, designed to replicate the core functionality of SCIO.
+## Tech Stack
 
-The main goal of this MVP is to validate the most important business flow of OptiSigns:
-
-> **Managing screens and displaying assets on screens**
-
-In this MVP:
-
-- **Screen is the core feature**
-- Each **Screen is associated with exactly one Asset** (image or video)
-- Assets are played via a **web-based mock player**, acting as a real device
-
-Advanced concepts such as playlists, scheduling, advanced real-time sync, native TV apps, billing, etc. are **intentionally excluded** to keep the scope suitable for ~3 focused working days.
+- **Backend:** Node.js (NestJS), MongoDB (Database), Redis (Caching).
+- **Frontend:** Angular (Admin Dashboard), Stripe Elements (Billing).
+- **Infrastructure:** AWS EC2 (Server), AWS S3 (Storage), AWS CloudFront (CDN).
+- **Player App:** Android (Kotlin) / WebOS / Tizen / Web App.
 
 ---
 
-## 2. High-level TODOs
+## PART 1: SCIO CLOUD CMS (Web Dashboard)
 
-### Planning & Design
+The central system for managing content, devices, and users.
 
-- Review the SCIO walkthrough and explore app.optisigns.com
-- Define MVP scope with a screen-first approach
-- Design core entities and data relationships
+### 1. Content & Design Studio
 
-### Backend
+- [ ] **Asset Management:**
+  - Multi-format upload: Images, Videos, Documents.
+  - Folder management, Grid view, Search.
+- [ ] **Online Design Studio:**
+  - **Templates Library:** Pre-designed templates by theme (Holidays, Menu...).
+  - **AI Designer:** Enter prompts for AI to generate template layouts.
+  - **Canvas Editor:** Drag-and-drop tool for text, images, and shapes to create designs from scratch (Canva-like).
+- [ ] **Playlist Builder:**
+  - Create Playlists, add Assets/Templates.
+  - Order arrangement (Drag & Drop), adjust Duration and Transition effects.
 
-- Initialize the project
-- Design database schema
-- Implement authentication (JWT)
-- Build APIs for Screen, Asset, and Player
-- Implement Player ↔ Screen pairing logic
+### 2. Device Management
 
-### Frontend
+- [ ] **Screen Pairing:** Connect new devices via a 6-digit "Pairing Code".
+- [ ] **Live Dashboard:** Monitor Online/Offline status and currently playing content.
+- [ ] **Content Assignment:** Assign Playlists, Schedules, or Loops to individual screens/groups.
 
-- Authentication flow
-- Screen management UI
-- Asset management UI
-- Assign Asset to Screen
-- Web Player page (device simulation)
+### 3. Operations & Automation
 
-### Finalization
+- [ ] **Smart Scheduling:** Schedule content playback by specific date/time (Calendar View).
+- [ ] **Operational Schedule:** Set automatic Screen Power On/Off schedules to save energy.
+- [ ] **Monitoring Alerts:** Configure Email alerts when devices lose connection for a specified duration.
+- [ ] **System Preferences:** Global system defaults (Password Policy, Default Duration, Image Scaling).
 
-- Seed sample data
-- Testing and bug fixing
-- Prepare content for presentation
+### 4. Engage Hub (Interaction Config)
 
----
+- [ ] **Touch Kiosks:** Enable/Disable touch mode, set destination URL for Kiosks.
+- [ ] **QR Generator:**
+  - **QR Overlay:** Create static QR Codes (Wifi, Web) overlaying content.
+  - **Scan-to-Interact:** Create dynamic QR Codes for mobile screen control.
+  - **Check-in/Review:** QR codes leading to check-in forms or reviews.
+- [ ] **IoT Triggers:** Configure "Lift & Learn" rules (Lift product -> Change content).
 
-## 3. MVP Features
+### 5. Commercial & Store
 
-### Authentication
+- [ ] **Billing Portal:**
+  - Select Subscription Plan (Free/Pro), add payment cards (Stripe Integration).
+  - Invoice History & Sub-Account Billing management (Agency).
+- [ ] **Hardware Store:**
+  - Player ordering page, quantity selection, shopping cart.
+  - Track order status (Order History).
 
-- Email/password login
-- JWT-based authentication
-- Protect the entire admin web app (Dashboard, Screen, Asset)
-- Only authenticated users can:
+### 6. Enterprise & Advanced
 
-  - Create / edit / delete Screens
-  - Upload and assign Assets
+- [ ] **Team Management:** Invite members, role-based access control (RBAC).
+- [ ] **Security & Logs:** Audit Log (Activity history), SSO (SAML Login).
+- [ ] **Branding:** Customize Logo, Favicon, Custom Subdomain.
+- [ ] **Analytics:** Proof-of-Play reports (play count), CSV export.
+- [ ] **Collaboration:** Share Links (Public Playlist sharing with password protection).
+- [ ] **Integrations:** Google Calendar, Tableau, API Keys, RS232 Commands.
 
-### Player (Device Simulation)
+### 7. Support
 
-- Web player accessible at `/player`
-- Player self-registers with the backend and receives a unique **playerId**
-- Player displays its playerId for the user to use when creating a Screen
-- Each user has only one player for testing
-
-### Screen Management (Core Feature)
-
-- Create / edit / delete Screens
-- When creating a Screen, the user selects a **playerId** to pair
-- Each Screen is assigned **exactly one Asset**
-- Ability to change the Asset of a Screen
-- Screen properties:
-
-  - Name
-  - playerId
-  - Assigned Asset (nullable)
-
-### Asset Management
-
-- Add Asset (upload image/video)
-- Preview and delete Asset
-
-### Mock Player Playback
-
-- Player calls backend APIs to fetch Screen and Asset by playerId
-- Once paired, the player starts playing the assigned Asset
-- Fullscreen playback of the Asset on the web player
+- [ ] **Help Center:** Documentation (Docs), Video Tutorials, Submit Support Tickets.
 
 ---
 
-## 4. Detailed Planning & Timeline (3 days – 8h/day)
+## PART 2: SCIO PLAYER APP (TV Software)
 
-### Day 1 – Foundation & Screen Core (8h)
+Application running on endpoint devices.
 
-- **Product understanding (0.75h):** Review SCIO and confirm screen-first flow and player–screen pairing
-- **Architecture & data design (0.75h):** Entities: User, Player, Screen, Asset
-- **Project setup (0.75h):** Backend and frontend skeleton
-- **Authentication (1h):** Register, login, JWT
-- **Screen & Player APIs (2h):** Screen CRUD, Player registration, pairing logic
-- **Screen UI (2.75h):** Create, edit, delete, list Screens and input playerId
+### 1. Core Engine
 
-### Day 2 – Asset Management (8h)
+- [ ] **Pairing:** Display 6-digit connection code.
+- [ ] **Sync & Cache:** Realtime content sync from Cloud, cache storage for Offline playback.
+- [ ] **Rendering:** Smooth rendering for Video (4K), Images, HTML5.
 
-- **Buffer & review (1.5h):** Seed data, validation, UI polish, re-test Day 1
-- **Asset upload & delete APIs (3h):** Upload image/video, file storage, DB records, deletion
-- **Asset management UI (3h):** Create, list, preview, delete Assets
-- **Assign Asset to Screen (0.5h):** Select Asset for each Screen
+### 2. Engage Runtime
 
-### Day 3 – Mock Player & Finalization (8h)
+- [ ] **Touch Handler:** Handle touch events for Kiosk mode.
+- [ ] **Mobile Controller:** Connect WebSocket with user mobile phones (via Scan-to-Interact QR).
+- [ ] **IoT Listener:** Listen for peripheral sensor signals (Lift & Learn).
+- [ ] **AI Processing:** Detect viewers via Camera (if available).
 
-- **Fixes & optimization (1h):** UI/API bug fixes and test runs
-- **Mock Player APIs (2h):** APIs for Player to fetch Screen & Asset by playerId
-- **Player UI (2h):** Fullscreen web player rendering Assets
-- **Testing (1.5h):** End-to-end testing, bug fixing, comparison with real app behavior
-- **Demo & interview prep (1.5h):** Prepare slides and demo notes
+### 3. System Control
+
+- [ ] **Power Management:** Execute Screen On/Off commands from Operational Schedule.
+- [ ] **Heartbeat & Logs:** Send Online signal and content playback logs to Server.
+
+## IMPLEMENTATION ROADMAP
+
+This roadmap is structured to prioritize core functionality, followed by operational control, user support, monetization, and finally advanced enterprise features.
+
+### PHASE 1: THE FOUNDATION (Core Loop)
+
+_Goal: Establish the basic loop (Upload -> Playlist -> Play on TV)._
+
+**Backend & Frontend CMS:**
+
+- [ ] **Auth:** User Registration, Login, Forgot Password (JWT).
+- [ ] **Asset Management:** Multi-format upload (Images/Videos/Docs) to S3, Folder management.
+- [ ] **Playlist Builder:** Create playlists, drag-and-drop ordering, duration settings.
+- [ ] **Screen Pairing:** Generate 6-digit "Pairing Code" and manage device connections.
+
+**Player App:**
+
+- [ ] **Core Engine:** Pairing screen UI, Real-time Content Sync (Socket/Polling), Offline Caching & Playback.
 
 ---
 
-## 5. Notes
+### PHASE 2: OPERATIONS & CONTROL
 
-This MVP focuses on validating the core value of a digital signage system: **pairing a device (player) with a screen and controlling displayed content**. The architecture is intentionally minimal but can be extended in the future with playlists, scheduling, real-time communication, and native TV players.
+_Goal: Remote device control and automated scheduling._
+
+**Backend & Frontend CMS:**
+
+- [ ] **Smart Scheduling:** Calendar view for scheduling content by specific date/time slots.
+- [ ] **Ops Schedule:** Configure automatic Screen Power On/Off schedules to save energy.
+- [ ] **Monitoring Alerts:** System rules to send Email alerts when devices go offline.
+- [ ] **Live Dashboard:** Visual indicator of Online/Offline status for all screens.
+
+**Player App:**
+
+- [ ] **Power Manager:** Execute Power On/Off commands based on Ops Schedule (HDMI-CEC or Black Screen).
+- [ ] **Heartbeat:** Send "I'm alive" signals to the server every 30s.
+
+---
+
+### PHASE 3: SUPPORT & USER SUCCESS
+
+_Goal: Ensure users understand the system before upgrading._
+
+**Frontend CMS:**
+
+- [ ] **Help Center UI:** A dedicated Knowledge Base portal.
+- [ ] **Ticketing System:** Form to submit support requests (integrated with email or helpdesk tools).
+- [ ] **Video Tutorials:** Hub for instructional videos.
+
+**Content Creation:**
+
+- [ ] **Docs:** Write guides for Phase 1 & 2 features (Pairing, Playlists, Scheduling).
+
+---
+
+### PHASE 4: MONETIZATION (Commercial)
+
+_Goal: Enable revenue streams via Subscriptions and Hardware sales._
+
+**Backend & Frontend CMS:**
+
+- [ ] **Billing Integration:** Integration with Stripe for Subscription plans (Free/Pro/Enterprise).
+- [ ] **Hardware Store:** E-commerce section to order Player devices (Stick/Box), Shopping Cart, Checkout.
+- [ ] **Invoices & Orders:** Invoice history for subscriptions and Order tracking for hardware.
+- [ ] **Sub-Accounts:** Billing management for Agencies/Resellers.
+- [ ] **Profile:** Comprehensive User and Company profile settings.
+
+---
+
+### PHASE 5: DIFFERENTIATION (Design & Engage)
+
+_Goal: "Killer Features" for interactive experiences and content creation._
+
+**Backend & Frontend CMS:**
+
+- [ ] **Online Design Studio:**
+  - **Templates:** Pre-made designs & AI Designer prompts.
+  - **Canvas Editor:** Canva-like drag-and-drop tool (Text, Images, Shapes).
+- [ ] **Engage Hub:** Configuration for Kiosk URLs, QR Overlays, and IoT Rules.
+
+**Player App (Engage Runtime):**
+
+- [ ] **Touch Mode:** Handle touch events to switch to Kiosk Webview.
+- [ ] **Mobile Control:** WebSocket connection for "Scan-to-Interact" (Control screen via phone).
+- [ ] **IoT Listener:** Trigger content changes based on peripheral sensors (Lift & Learn).
+
+---
+
+### PHASE 6: ENTERPRISE & SCALE
+
+_Goal: Features for large-scale organizations and security._
+
+**Backend & Frontend CMS:**
+
+- [ ] **Team Management:** Role-Based Access Control (RBAC - Admin/Editor/Viewer).
+- [ ] **Security:** Audit Logs (Activity History) & SSO (SAML Login).
+- [ ] **Branding:** White-labeling (Custom Logo, Favicon, Subdomain).
+- [ ] **Analytics:** Proof-of-Play reports with CSV Export.
+- [ ] **Integrations:** Google Calendar, Tableau, API Keys, RS232 Command configuration.
+- [ ] **Share Links:** Publicly share playlists via URL with password protection.
